@@ -11,5 +11,5 @@ pub fn render_index_page(posts: &[BlogPost]) -> Result<String, Error> {
     let mut ctx = Context::default();
     ctx.insert("posts", &posts);
 
-    crate::renderer::render("blog_post", ctx)
+    crate::renderer::render("index", ctx)
 }
