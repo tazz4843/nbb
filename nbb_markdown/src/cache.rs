@@ -46,6 +46,10 @@ fn check_hash(path: &Path) -> bool {
 
 /// Get a rendered object from cache, or return None if this needs to be re-rendered/was not found.
 pub fn get_from_cache(path: &Path) -> Option<String> {
+    if !nbb_config::get_config().general.cache_rendered_pages {
+        return None;
+    }
+
     if !check_hash(path) {
         return None;
     }
