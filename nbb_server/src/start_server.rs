@@ -8,6 +8,10 @@ pub async fn start_server() {
     let router = crate::router::build_router();
     let cfg = nbb_config::get_config();
 
+    if cfg.general.cache_rendered_pages && !cfg.general.render_on_request {
+        nbb_markdown::prerender_all(cfg.general.data_dir.as_ref());
+    }
+
     match cfg.server.bind_address {
         ServerBindType::Tcp(ref addr, port) => start_server_tcp(addr, port, router).await,
         ServerBindType::Unix(ref path) => start_server_uds(path, router).await,
