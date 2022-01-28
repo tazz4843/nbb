@@ -26,13 +26,13 @@ then run ``docker-compose up -d`` to start up
 
 this binds to port 8080 by default: edit ``docker-compose.yml`` to change this port
 
-## configuration
+# configuration
 
 open up ``config.yaml`` in a text editor
 
 everything is heavily commented with an explanation
 
-## usage
+# usage
 
 put new ``.md`` files into ``./blog`` (by default)
 
@@ -46,3 +46,15 @@ these assets will be available at ``/blog/name/:assets``
 
 if you need *global* static assets, put them into ``/static``
 where they will be available at ``/static/:assets``
+
+# more help
+
+check out [the wiki](https://github.com/tazz4843/nbb/wiki)
+
+# credits
+
+thanks to [libreddit](https://github.com/spikecodes/libreddit) for the Docker image builds
+
+# license
+
+EUPL-1.2
