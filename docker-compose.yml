@@ -1,0 +1,12 @@
+version: "3"
+services:
+    nbb:
+        image: tazz4843/nbb
+        volumes:
+            -   "./config.yaml:/config.yaml"
+            -   "./blog:/blog"
+        ports:
+            # if you want to change the Docker port, this is what you change!
+            # DO NOT change the port in config.yaml!
+            # to change it to port 6969 for example, set this to "6969:8080"
+            -   "6969:8080"
