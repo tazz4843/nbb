@@ -19,6 +19,12 @@ jobs:
             -   name: Cache Packages
                 uses: Swatinem/rust-cache@v1.0.1
 
+            -   uses: actions-rs/toolchain@v1
+                with:
+                    profile: minimal
+                    toolchain: nightly
+                    override: true
+
             -   name: Build
                 run: cargo build --release
 
