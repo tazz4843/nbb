@@ -2,6 +2,7 @@
 extern crate tracing;
 
 mod blog_post;
+mod blog_post_assets;
 mod errors;
 mod info;
 mod not_found;
