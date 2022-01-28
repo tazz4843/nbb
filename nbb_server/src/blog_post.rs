@@ -5,9 +5,10 @@ use nbb_renderer::render_blog_post;
 use std::time::UNIX_EPOCH;
 
 pub async fn blog_post(
-    WebPath(path): WebPath<String>,
+    WebPath(mut path): WebPath<String>,
 ) -> Result<(HeaderMap, String), WebServerError> {
     let cfg = nbb_config::get_config();
+    path = path.to_lowercase();
     let mut target = cfg.general.data_dir.join(&path);
     target.set_extension("md");
     debug!(
@@ -39,9 +40,19 @@ pub async fn blog_post(
         .as_secs();
 
     debug!(request_path=%path, resolved_path=?target, "rendering HTML page");
-    let blog_post =
-        nbb_renderer::BlogPost::post_page(path.into(), None, created_at, rendered_md.into());
-    let rendered_html = tokio::task::spawn_blocking(move || render_blog_post(&blog_post)).await??;
+    let rendered_html = tokio::task::spawn_blocking(move || {
+        let blog_post = nbb_renderer::BlogPost::post_page(
+            target
+                .file_stem()
+                .expect("file name was already set")
+                .to_string_lossy(),
+            None,
+            created_at,
+            rendered_md.into(),
+        );
+        render_blog_post(&blog_post)
+    })
+    .await??;
 
     let mut headers = HeaderMap::with_capacity(1);
     headers.insert("Content-Type", HeaderValue::from_static("text/html"));
