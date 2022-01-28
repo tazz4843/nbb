@@ -15,7 +15,6 @@ WORKDIR /
 
 COPY --from=build /nbb/target/release/nbb .
 
-EXPOSE 8080/tcp
 VOLUME "/blog"
 
 CMD ["./nbb"]
