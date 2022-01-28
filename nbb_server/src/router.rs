@@ -16,12 +16,14 @@ pub fn build_router() -> Router {
         .route("/blog/:title/:file", get(blog_post_assets))
         .route(
             "/static/:file",
-            get_service(ServeDir::new(".")).handle_error(|error: std::io::Error| async move {
-                (
-                    StatusCode::INTERNAL_SERVER_ERROR,
-                    format!("Unhandled internal error: {}", error),
-                )
-            }),
+            get_service(ServeDir::new("./static")).handle_error(
+                |error: std::io::Error| async move {
+                    (
+                        StatusCode::INTERNAL_SERVER_ERROR,
+                        format!("Unhandled internal error: {}", error),
+                    )
+                },
+            ),
         )
         .route("/info", get(info))
         .fallback(get(not_found))
