@@ -11,12 +11,11 @@ RUN cargo build --release
 # our final base
 FROM debian:bullseye-slim
 
-# copy the build artifact from the build stage
+WORKDIR /
+
 COPY --from=build /nbb/target/release/nbb .
 
 EXPOSE 8080/tcp
-VOLUME "/config"
 VOLUME "/blog"
 
-# set the startup command to run your binary
-CMD ["./nbb", "/config/config.yml"]
+CMD ["./nbb"]
