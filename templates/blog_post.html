@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ post.title }} | {{ title }}</title>
+    <style>
+        html {
+            font-family: "JetBrains Mono", monospace;
+            background-color: #000;
+            color: #fff;
+        }
+
+        a {
+            color: #999;
+        }
+        a:hover {
+            color: #CCC;
+        }
+
+        footer {
+            font-size: small;
+        }
+    </style>
+    <style>
+        {{ custom_css }}
+    </style>
+    {{ custom_html.head }}
+</head>
+<body>
+<h1 align="center">{{ post.title }}</h1>
+{% if post.description %}
+<h2 align="center">{{ post.description }}</h2>
+{% endif %}
+<h3 align="center" id="post_date">{{ post.date }}</h3>
+
+{{ post.body }}
+
+<script>
+    // lazy way of having localized timestamps
+    const postDateElement = document.getElementById("post_date");
+    const postDate = new Date(parseInt(postDateElement.innerHTML, 10) * 1000);
+    postDateElement.innerHTML = postDate.toLocaleString();
+</script>
+
+<footer>
+    <p>
+        blog created with <a href="https://github.com/tazz4843/nbb">nbb</a> version {{ nbb_version }}
+    </p>
+</footer>
+
+{{ custom_html.body }}
+</body>
+</html>

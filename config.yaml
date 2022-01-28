@@ -1,0 +1,291 @@
+server:
+  # Address to bind the server to.
+  #
+  # Set to a string for Unix Domain Socket like so:
+  #bind_address: /var/run/nbb
+  bind_address:
+    - 0.0.0.0
+    - 8080
+
+  # Log filter
+  #
+  # This is passed directly to `tracing-subscriber`.
+  # The `RUST_LOG` environment variable overrides this.
+  log_filter: "trace"
+
+
+html:
+  # Directory to HTML files to render if you'd like to overwrite the built in ones.
+  #
+  # This directory must contain three HTML files:
+  # * index.html
+  # * blog_post.html
+  # * 404.html
+  #
+  # If any are missing, you will get a panic at runtime.
+  #custom_render_dir: ~
+  
+  custom_html:
+    # Custom HTML to inject right before the closing `</head>` tag
+    head: ""
+
+    # Custom HTML to inject right before the closing `</body>` tag
+    body: ""
+
+  # Custom CSS to inject into a `<style>` tag in the `<head>` of every page
+  #custom_css: ""
+
+
+markdown:
+  # Allow custom HTML in Markdown of posts?
+  #
+  # This may be a security issue depending on who can publish,
+  # however, for most blogs, this is fine.
+  #
+  # Defaults to true.
+  #allow_custom_html: true
+  
+  # If custom HTML is denied, remove the HTML or escape it?
+  #
+  # Ignored if `allow_custom_html` is true.
+  #
+  # Example input:
+  # ```md
+  # <i>italic text</i>
+  # ```
+  #
+  # If true:
+  # ```html
+  # <p>&lt;i&gt;italic text&lt;/i&gt;</p>
+  # ```
+  #
+  # If false:
+  # ```html
+  # <p><!-- raw HTML omitted -->italic text<!-- raw HTML omitted --></p>
+  # ```
+  #
+  # Defaults to true.
+  #escape_custom_html: true
+  
+  # Allow rendering of raw HTML and potentially dangerous links?
+  #
+  # This can easily be a security issue, as it allows links such as
+  # ```md
+  # [Dangerous](javascript:alert(document.cookie))
+  # ```
+  #
+  # Defaults to false.
+  #unsafe: false
+  
+  # The maximum length of a single line.
+  # Any lines longer than this are wrapped at word breaks to this maximum.
+  #
+  # Defaults to 4,294,967,295.
+  #max_line_length: 4294967295
+  
+  # Should soft line breaks in the Markdown be converted to hard line breaks in the HTML?
+  #
+  # Example input:
+  # Hello.
+  # World.
+  #
+  # If true:
+  # <p>Hello.<br />
+  # World.</p>
+  #
+  # If false:
+  # <p>Hello.
+  # World.</p>
+  #
+  # Defaults to false.
+  #soft_breaks_to_hard_breaks: false
+  
+  # How should code be defined?
+  #
+  # Useful for custom CSS.
+  #
+  # Example input (sans backslashes, that is just to prevent rustdoc from taking the blocks):
+  # ```rust
+  # fn hello();
+  # ```
+  #
+  # If this is true:
+  # <pre lang="rust"><code>fn hello();
+  # </code></pre>
+  #
+  # If this is false:
+  # <pre><code class="language-rust">fn hello();
+  # </code></pre>
+  #
+  # Defaults to true.
+  #github_pre_lang: true
+  
+  # Convert normal punctuation to "smart" punctuation?
+  #
+  # Example input:
+  # ```md
+  # 'Hello,' \"world\" ...
+  # ```
+  #
+  # If true:
+  # ```html
+  # <p>‘Hello,’ “world” …</p>
+  # ```
+  #
+  # If false:
+  # ```html
+  # <p>'Hello,' &quot;world&quot; ...</p>
+  # ```
+  #
+  # Defaults to false.
+  #smart_punctuation: false
+  
+  # The default language for code blocks.
+  #
+  # Defaults to None.
+  #default_code_language: ~
+  
+  # Extensions to the CommonMark spec
+  extensions:
+    
+    # Enables the autolink extension from the GFM spec.
+    # https://github.github.com/gfm/#autolinks-extension-
+    #
+    # Defaults to true.
+    autolink: true
+    
+    # Enables the description lists extension.
+    #
+    # Each term must be defined in one paragraph,
+    # followed by a blank line, and then by the details.
+    # Details begins with a colon.
+    #
+    #
+    # ```md
+    # First term
+    #
+    #: Details for the **first term**
+    #
+    # Second term
+    #
+    #: Details for the **second term**
+    #
+    #     More details in second paragraph.
+    # ```
+    #
+    # Defaults to false.
+    #description_lists: false
+    
+    # Enables the
+    # [tagfilter extension](https://github.github.com/gfm/#disallowed-raw-html-extension-)
+    # from the GFM spec.
+    #
+    # This disallows the following HTML tags:
+    # * \<title>
+    # * \<textarea>
+    # * \<style>
+    # * \<xmp>
+    # * \<iframe>
+    # * \<noembed>
+    # * \<noframes>
+    # * \<script>
+    # * \<plaintext>
+    #
+    # Defaults to true.
+    #disallow_some_html: true
+    
+    # Enables the footnotes extension per `cmark-gfm`.
+    #
+    # The extension is modelled after Kramdown:
+    # https://kramdown.gettalong.org/syntax.html#footnotes
+    #
+    # Input:
+    # Hi[^x].
+    #
+    # [^x]: A greeting.
+    #
+    # Output:
+    # <p>Hi<sup class="footnote-ref"><a href="#fn1" id="fnref1">1</a></sup>.</p>
+    # <section class="footnotes">
+    # <ol>
+    # <li id="fn1">
+    # <p>A greeting. <a href="#fnref1" class="footnote-backref">↩</a></p>
+    # </li>
+    # </ol>
+    # </section>
+    #
+    # Defaults to true.
+    #footnotes: true
+    
+    # Enables the strikethrough extension from the GFM spec.
+    # https://github.github.com/gfm/#strikethrough-extension-
+    #
+    # Defaults to true.
+    #strikethrough: true
+    
+    # Enables the superscript Comrak extension.
+    #
+    # Input:
+    # e = mc^2^.
+    #
+    # Output:
+    # <p>e = mc<sup>2</sup>.</p>
+    #
+    # Defaults to false.
+    #superscript: false
+    
+    # Enables the table extension from the GFM spec.
+    # https://github.github.com/gfm/#tables-extension-
+    #
+    # Defaults to true.
+    #tables: true
+    
+    # Enables the task list items extension from the GFM spec.
+    # https://github.github.com/gfm/#task-list-items-extension-
+    #
+    # Note that the spec does not define the precise output, so only the bare essentials are
+    # rendered.
+    #
+    # Defaults to true.
+    #task_lists: true
+
+
+general:
+  # Blog title
+  title: "zero's blog"
+  
+  # Blog description
+  description: "random stuff from an idiot dev"
+  
+  # Data directory location.
+  #
+  # Defaults to ./blog
+  #data_dir: "./blog"
+  
+  # Blog language
+  #
+  # Defaults to English (`en`)
+  #
+  # Should be the two or five letter code, like `fi` for Finnish or `fr-ca` for French (Canada)
+  #language: en
+  
+  # Should rendered pages be cached?
+  #
+  # Defaults to true. It's recommended to only set this to false if:
+  # * you have a very large number of posts
+  # * you have *very* little memory (even with ~50 5,000 character rendered files cache only takes up around 500kb RAM)
+  # * you are setting up custom CSS
+  #
+  # If this is false, pages will be re-rendered every time they are requested.
+  #cache_rendered_pages: true
+
+  # Should pages be lazily-rendered?
+  #
+  # If true, pages will only be rendered upon first request.
+  #
+  # If false, all pages will be rendered on startup and inserted into cache.
+  #
+  # If cache is not enabled, this setting does nothing.
+  #
+  # Defaults to false.
+  #render_on_request: false

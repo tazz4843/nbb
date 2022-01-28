@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+    <meta charset="UTF-8">
+    <title>404 Not Found</title>
+    <style>
+        html {
+            font-family: "JetBrains Mono", monospace;
+            background-color: #000;
+            color: #fff;
+        }
+
+        a {
+            color: #999;
+        }
+        a:hover {
+            color: #CCC;
+        }
+    </style>
+    <style>
+        {{ custom_css }}
+    </style>
+    {{ custom_html.head }}
+</head>
+<body>
+<h1 align="center">404 Not Found</h1>
+
+<p>
+    hmm not sure how to help you here :(<br>
+    <br>
+    <a href="/">go home?</a>
+</p>
+
+<footer>
+    <p>
+        blog created with <a href="https://github.com/tazz4843/nbb">nbb</a> version {{ nbb_version }}
+    </p>
+</footer>
+
+{{ custom_html.body }}
+</body>
+</html>

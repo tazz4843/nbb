@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <style>
+        html {
+            font-family: "JetBrains Mono", monospace;
+            background-color: #000;
+            color: #fff;
+        }
+
+        a {
+            color: #999;
+        }
+        a:hover {
+            color: #CCC;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0px;
+        }
+        li {
+            padding-bottom: 10px;
+        }
+
+        footer {
+            font-size: small;
+        }
+
+        .post_title {
+            font-size: large;
+            font-weight: 800;
+        }
+        .post_description {
+            font-weight: 600;
+        }
+        .post_date {
+            font-size: smaller;
+            font-weight: 400;
+        }
+    </style>
+    <style>
+        {{ custom_css }}
+    </style>
+    {{ custom_html.head }}
+</head>
+<body>
+<h1 align="center">{{ title }}</h1>
+<h2 align="center">{{ description }}</h2>
+
+<ul>
+    {% for post in posts %}
+    <li>
+        <span class="post_title"><a href="{{ post.target }}">{{ post.title }}</a></span>
+        {% if post.description %}
+        - <span class="post_description">{{ post.description }}</span>
+        {% endif %}
+        - <span class="post_date">{{ post.date }}</span>
+    </li>
+    {% endfor %}
+</ul><br>
+
+<script>
+    // this is a lazy way of having localized timestamps
+    const postDateElements = document.getElementsByClassName("post_date");
+    for (let postDateElement of postDateElements) {
+        const postDate = new Date(parseInt(postDateElement.innerHTML, 10) * 1000);
+        postDateElement.innerHTML = postDate.toLocaleString();
+    }
+</script>
+
+<footer>
+    <p>
+        blog created with <a href="https://github.com/tazz4843/nbb">nbb</a> version {{ nbb_version }}
+    </p>
+</footer>
+
+{{ custom_html.body }}
+</body>
+</html>

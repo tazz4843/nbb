@@ -1,0 +1,15 @@
+[package]
+name = "nbb_core"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+nbb_config = { path = "../nbb_config" }
+nbb_server = { path = "../nbb_server" }
+nbb_consts = { path = "../nbb_consts" }
+
+tokio = { version = "1.15", features = ["full"] }
+tracing-subscriber = { version = "0.3", features = ["parking_lot", "time", "env-filter"] }
+tracing = "0.1"

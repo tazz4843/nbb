@@ -1,0 +1,21 @@
+[package]
+name = "nbb"
+# NOTE: bumping the version here does nothing
+# you need to bump the version in nbb_consts/Cargo.toml instead
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[workspace]
+members = [
+  "nbb_markdown",
+  "nbb_server",
+  "nbb_config",
+  "nbb_core",
+  "nbb_consts",
+  "nbb_renderer"
+]
+
+[dependencies]
+nbb_core = { path = "nbb_core" }
