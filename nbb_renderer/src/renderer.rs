@@ -10,12 +10,8 @@ static RENDERER: OnceCell<Arc<RwLock<Tera>>> = OnceCell::new();
 fn load_rendering_engine() -> Arc<RwLock<Tera>> {
     let cfg = nbb_config::get_config();
 
-    let renderer = match cfg.html.custom_render_dir {
-        Some(ref dir) => match Tera::new(dir) {
-            Ok(r) => r,
-            Err(e) => panic!("failed to load rendering engine: {}", e),
-        },
-        None => {
+    let renderer = cfg.html.custom_render_dir.as_ref().map_or_else(
+        || {
             let mut renderer = Tera::default();
             renderer
                 .add_raw_templates(vec![
@@ -25,8 +21,12 @@ fn load_rendering_engine() -> Arc<RwLock<Tera>> {
                 ])
                 .expect("internal error: compiled-in templates are invalid");
             renderer
-        }
-    };
+        },
+        |dir| match Tera::new(dir) {
+            Ok(r) => r,
+            Err(e) => panic!("failed to load rendering engine: {}", e),
+        },
+    );
     let renderer_arc = Arc::new(RwLock::new(renderer));
 
     let r2 = renderer_arc.clone();
@@ -38,9 +38,9 @@ fn load_rendering_engine() -> Arc<RwLock<Tera>> {
             .expect("failed to register signal handler");
 
         let mut buf = [0];
-        let _ = rx.read_exact(&mut buf);
+        drop(rx.read_exact(&mut buf));
 
-        let _ = r2.write().full_reload();
+        r2.write().full_reload().expect("failed to reload Tera");
     });
     renderer_arc
 }
