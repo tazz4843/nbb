@@ -15,6 +15,9 @@ WORKDIR /
 
 COPY --from=build /nbb/target/release/nbb .
 
+RUN adduser --home /nonexistent --no-create-home --disabled-password nbb
+USER nbb
+
 VOLUME "/blog"
 
 CMD ["./nbb"]
