@@ -1,0 +1,30 @@
+FROM --platform=$BUILDPLATFORM rustlang/rust:nightly-slim AS build
+
+ENV CARGO_TARGET_ARMV7_UNKNOWN_LINUX_GNUEABIHF_LINKER=arm-linux-gnueabihf-gcc
+ENV CC_armv7_unknown_linux_gnueabihf=arm-linux-gnueabihf-gcc
+
+RUN apt-get update && apt-get -y install gcc-arm-linux-gnueabihf binutils-arm-linux-gnueabihf
+
+RUN rustup target add armv7-unknown-linux-gnueabihf
+
+WORKDIR /nbb
+
+COPY . .
+
+ENV RUSTFLAGS="--emit=asm"
+
+RUN cargo build --target armv7-unknown-linux-gnueabihf --release
+
+# our final base
+FROM debian:bullseye-slim
+
+WORKDIR /
+
+COPY --from=build /nbb/target/armv7-unknown-linux-gnueabihf/release/nbb .
+
+RUN adduser --home /nonexistent --no-create-home --disabled-password nbb
+USER nbb
+
+VOLUME "/blog"
+
+CMD ["./nbb"]
