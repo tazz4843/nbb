@@ -881,6 +881,7 @@ dependencies = [
  "nbb_config",
  "once_cell",
  "tokio",
+ "tracing",
 ]
 
 [[package]]

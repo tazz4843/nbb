@@ -1,5 +1,8 @@
 #![feature(once_cell)]
 
+#[macro_use]
+extern crate tracing;
+
 mod cache;
 mod cfg;
 mod prerender;
