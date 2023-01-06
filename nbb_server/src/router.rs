@@ -26,6 +26,6 @@ pub fn build_router() -> Router {
             ),
         )
         .route("/info", get(info))
-        .fallback(get(not_found))
+        .fallback(not_found)
         .layer(TraceLayer::new_for_http())
 }
