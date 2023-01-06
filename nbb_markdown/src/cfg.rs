@@ -1,5 +1,5 @@
 use comrak::ComrakOptions;
-use std::lazy::SyncOnceCell as OnceCell;
+use once_cell::sync::OnceCell;
 
 static RENDERER_CONFIG: OnceCell<ComrakOptions> = OnceCell::new();
 
