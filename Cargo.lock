@@ -292,18 +292,17 @@ dependencies = [
 
 [[package]]
 name = "comrak"
-version = "0.15.0"
+version = "0.17.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c11e55664fcff7f4d37cc2adf3a1996913692f037312f4ab0909047fdd2bf962"
+checksum = "54b9638d96f93f8bf7b050f7505ba0d82b8267f601965b08faa0eb4882a9bba9"
 dependencies = [
  "clap",
  "entities",
  "memchr",
  "once_cell",
- "pest",
- "pest_derive",
  "regex",
  "shell-words",
+ "slug",
  "syntect",
  "typed-arena",
  "unicode_categories",
