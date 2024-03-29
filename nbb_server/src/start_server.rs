@@ -43,31 +43,28 @@ async fn start_server_tcp(addr: &str, port: u16, router: Router) {
 async fn start_server_uds(path: &str, router: Router) {
     let listener = tokio::net::UnixListener::bind(path).expect("failed to bind to unix socket");
 
-    tokio::spawn(async move {
-        let mut make_service = router.into_make_service();
+    let mut make_service = router.into_make_service();
 
-        loop {
-            let (socket, _remote_addr) = listener.accept().await.unwrap();
+    loop {
+        let (socket, _remote_addr) = listener.accept().await.unwrap();
 
-            let tower_service = unwrap_infallible(make_service.call(&socket).await);
+        let tower_service = unwrap_infallible(make_service.call(&socket).await);
 
-            tokio::spawn(async move {
-                let socket = TokioIo::new(socket);
+        tokio::spawn(async move {
+            let socket = TokioIo::new(socket);
 
-                let hyper_service =
-                    hyper::service::service_fn(move |request: Request<Incoming>| {
-                        tower_service.clone().call(request)
-                    });
-
-                if let Err(err) = hyper_util::server::conn::auto::Builder::new(TokioExecutor::new())
-                    .serve_connection_with_upgrades(socket, hyper_service)
-                    .await
-                {
-                    eprintln!("failed to serve connection: {err:#}");
-                }
+            let hyper_service = hyper::service::service_fn(move |request: Request<Incoming>| {
+                tower_service.clone().call(request)
             });
-        }
-    });
+
+            if let Err(err) = hyper_util::server::conn::auto::Builder::new(TokioExecutor::new())
+                .serve_connection_with_upgrades(socket, hyper_service)
+                .await
+            {
+                eprintln!("failed to serve connection: {err:#}");
+            }
+        });
+    }
 }
 
 fn unwrap_infallible<T>(result: Result<T, Infallible>) -> T {
