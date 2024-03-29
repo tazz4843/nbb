@@ -1,5 +1,5 @@
 use axum::{
-    body::{boxed, Full},
+    body::{Body},
     http::{HeaderValue, StatusCode},
     response::{IntoResponse, Response},
 };
@@ -69,35 +69,35 @@ impl IntoResponse for WebServerError {
         let (status, response_body, content_type) = match self {
             WebServerError::NotFound => (
                 StatusCode::NOT_FOUND,
-                boxed(Full::from(nbb_renderer::render_404())),
+                Body::new(nbb_renderer::render_404()),
                 HeaderValue::from_static("text/html"),
             ),
             WebServerError::TeraError(e) => (
                 StatusCode::INTERNAL_SERVER_ERROR,
-                boxed(Full::from(format!(
+                Body::new(format!(
                     "fatal internal server error while rendering this page: {}\n\
                     this is a bug: please report it at https://github.com/tazz4843/nbb/issues/new",
                     e
-                ))),
+                )),
                 HeaderValue::from_static("text/plain"),
             ),
             WebServerError::JoinError(e) => (
                 StatusCode::INTERNAL_SERVER_ERROR,
-                boxed(Full::from(format!(
+                Body::new(format!(
                     "background tokio task panicked: {}\n\
                     this is a bug: please report it at https://github.com/tazz4843/nbb/issues/new",
                     e
-                ))),
+                )),
                 HeaderValue::from_static("text/plain"),
             ),
             WebServerError::IoError(e) => (
                 StatusCode::INTERNAL_SERVER_ERROR,
-                boxed(Full::from(format!("filesystem IO error: {}", e))),
+                Body::new(format!("filesystem IO error: {}", e)),
                 HeaderValue::from_static("text/plain"),
             ),
             WebServerError::SystemTimeError(e) => (
                 StatusCode::INTERNAL_SERVER_ERROR,
-                boxed(Full::from(format!("system time behind unix epoch: {}", e))),
+                Body::new(format!("system time behind unix epoch: {}", e)),
                 HeaderValue::from_static("text/plain"),
             ),
         };
