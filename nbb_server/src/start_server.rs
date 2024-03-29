@@ -61,7 +61,7 @@ async fn start_server_uds(path: &str, router: Router) {
                 .serve_connection_with_upgrades(socket, hyper_service)
                 .await
             {
-                eprintln!("failed to serve connection: {err:#}");
+                warn!("failed to serve connection: {err:#}");
             }
         });
     }
