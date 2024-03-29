@@ -9,8 +9,8 @@ edition = "2021"
 nbb_config = { path = "../nbb_config" }
 nbb_consts = { path = "../nbb_consts" }
 
-tera = "1.15"
-once_cell = { version = "1.9", features = ["parking_lot"] }
+tera = "1.19"
+once_cell = { version = "1.19", features = ["parking_lot"] }
 serde = { version = "1.0", features = ["derive"] }
 signal-hook = "0.3"
 parking_lot = "0.12"

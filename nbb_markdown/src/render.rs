@@ -14,7 +14,7 @@ pub fn render_markdown(path: &Path) -> String {
 
     crate::cache::get_from_cache(path).map_or_else(
         || {
-            let md = std::fs::read_to_string(&path).expect("file doesn't exist!");
+            let md = std::fs::read_to_string(path).expect("file doesn't exist!");
             let rendered = comrak::markdown_to_html(&md, cfg);
             crate::cache::insert_into_cache(path.to_path_buf(), rendered.clone());
             rendered

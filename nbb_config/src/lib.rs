@@ -1,5 +1,4 @@
 //! `nbb_config`
-#![feature(once_cell)]
 #![deny(missing_docs)]
 
 #[macro_use]

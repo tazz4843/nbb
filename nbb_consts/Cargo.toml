@@ -9,5 +9,5 @@ build = "build.rs"
 [dependencies]
 
 [build-dependencies]
-built = { version = "0.5", features = ["chrono", "git2", "semver"] }
+built = { version = "0.7", features = ["chrono", "git2", "semver"] }
 

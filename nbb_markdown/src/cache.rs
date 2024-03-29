@@ -13,7 +13,7 @@ static RENDERER_CACHE: OnceCell<DashMap<PathBuf, String>> = OnceCell::new();
 fn check_hash(path: &Path) -> bool {
     let fmt_path = path.to_string_lossy();
     debug!(path=%fmt_path, "checking hash for {:?}", path);
-    let mut f = match std::fs::OpenOptions::new().read(true).open(&path) {
+    let mut f = match std::fs::OpenOptions::new().read(true).open(path) {
         Ok(f) => f,
         Err(_) => return false,
     };

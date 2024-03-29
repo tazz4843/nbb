@@ -4,8 +4,8 @@ use once_cell::sync::OnceCell;
 static APP_CONFIG: OnceCell<GlobalConfig> = OnceCell::new();
 
 #[inline]
-pub fn set_config(config: GlobalConfig<'static>) -> Result<(), GlobalConfig> {
-    APP_CONFIG.set(config)
+pub fn set_config(config: GlobalConfig<'static>) -> Result<(), ()> {
+    APP_CONFIG.set(config).map_err(|_| ())
 }
 
 /// Get the global config object.

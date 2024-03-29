@@ -1,5 +1,3 @@
-#![feature(once_cell)]
-
 #[macro_use]
 extern crate tracing;
 

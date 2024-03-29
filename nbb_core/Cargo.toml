@@ -10,6 +10,6 @@ nbb_config = { path = "../nbb_config" }
 nbb_server = { path = "../nbb_server" }
 nbb_consts = { path = "../nbb_consts" }
 
-tokio = { version = "1.24", features = ["full"] }
+tokio = { version = "1.37", features = ["full"] }
 tracing-subscriber = { version = "0.3", features = ["parking_lot", "time", "env-filter"] }
 tracing = "0.1"

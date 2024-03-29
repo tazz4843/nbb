@@ -5,13 +5,13 @@ server:
   #bind_address: /var/run/nbb
   bind_address:
     - 0.0.0.0
-    - 8080
+    - 4444
 
   # Log filter
   #
   # This is passed directly to `tracing-subscriber`.
   # The `RUST_LOG` environment variable overrides this.
-  log_filter: "trace"
+  log_filter: "info"
 
 
 html:
@@ -158,7 +158,7 @@ markdown:
     #
     # Each term must be defined in one paragraph,
     # followed by a blank line, and then by the details.
-    # Details begins with a colon.
+    # Details begin with a colon.
     #
     #
     # ```md

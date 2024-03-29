@@ -33,7 +33,7 @@ async fn start_server_tcp(addr: &str, port: u16, router: Router) {
 }
 
 async fn start_server_uds(path: &str, router: Router) {
-    let listener = tokio::net::UnixListener::bind(&path).expect("failed to bind to unix socket");
+    let listener = tokio::net::UnixListener::bind(path).expect("failed to bind to unix socket");
     let stream = tokio_stream::wrappers::UnixListenerStream::new(listener);
     let acceptor = hyper::server::accept::from_stream(stream);
 
