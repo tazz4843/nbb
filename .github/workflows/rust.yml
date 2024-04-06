@@ -1,60 +1,60 @@
 name: Rust
 
 on:
-    push:
-        paths-ignore:
-            - "**.md"
-        branches:
-            - master
+  push:
+    paths-ignore:
+      - "**.md"
+    branches:
+      - master
 
 env:
-    CARGO_TERM_COLOR: always
+  CARGO_TERM_COLOR: always
 
 jobs:
-    build:
-        runs-on: ubuntu-18.04
-        steps:
-            -   uses: actions/checkout@v2
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
 
-            -   name: Cache Packages
-                uses: Swatinem/rust-cache@v1.0.1
+      - name: Cache Packages
+        uses: Swatinem/rust-cache@v1.0.1
 
-            -   uses: actions-rs/toolchain@v1
-                with:
-                    profile: minimal
-                    toolchain: nightly
-                    override: true
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly
+          override: true
 
-            -   name: Build
-                run: cargo build --release
+      - name: Build
+        run: cargo build --release
 
-            -   uses: actions/upload-artifact@v2.2.1
-                name: Upload a Build Artifact
-                with:
-                    name: nbb
-                    path: target/release/nbb
+      - uses: actions/upload-artifact@v2.2.1
+        name: Upload a Build Artifact
+        with:
+          name: nbb
+          path: target/release/nbb
 
-            -   name: Versions
-                id: version
-                run: |
-                    echo "::set-output name=version::$(cargo metadata --format-version 1 --no-deps | jq .packages[0].version -r | sed 's/^/v/')"
-                    echo "::set-output name=tag::$(git describe --tags)"
+      - name: Versions
+        id: version
+        run: |
+          echo "::set-output name=version::$(cargo metadata --format-version 1 --no-deps | jq .packages[0].version -r | sed 's/^/v/')"
+          echo "::set-output name=tag::$(git describe --tags)"
 
-            -   name: Calculate SHA512 checksum
-                run: sha512sum target/release/nbb > nbb.sha512
+      - name: Calculate SHA512 checksum
+        run: sha512sum target/release/nbb > nbb.sha512
 
-            -   name: Release
-                uses: softprops/action-gh-release@v1
-                if: github.base_ref != 'master'
-                with:
-                    tag_name: ${{ steps.version.outputs.version }}
-                    name: ${{ steps.version.outputs.version }} - ${{ github.event.head_commit.message }}
-                    draft: true
-                    files: |
-                        target/release/nbb
-                        nbb.sha512
-                    body: |
-                        - ${{ github.event.head_commit.message }} ${{ github.sha }}
-                    generate_release_notes: true
-                env:
-                    GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: github.base_ref != 'master'
+        with:
+          tag_name: ${{ steps.version.outputs.version }}
+          name: ${{ steps.version.outputs.version }} - ${{ github.event.head_commit.message }}
+          draft: true
+          files: |
+            target/release/nbb
+            nbb.sha512
+          body: |
+            - ${{ github.event.head_commit.message }} ${{ github.sha }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
