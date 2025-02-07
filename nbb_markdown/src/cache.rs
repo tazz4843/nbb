@@ -72,5 +72,5 @@ pub fn insert_into_cache(path: PathBuf, html: String) -> bool {
     RENDERER_CACHE
         .get_or_init(DashMap::new)
         .insert(path, html)
-        .map_or(false, |_| true)
+        .is_some_and(|_| true)
 }
