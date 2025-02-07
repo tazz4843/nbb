@@ -27,7 +27,7 @@ jobs:
       - name: Build
         run: cargo build --release
 
-      - uses: actions/upload-artifact@v2.2.1
+      - uses: actions/upload-artifact@v4.6.0
         name: Upload a Build Artifact
         with:
           name: nbb_linux_amd64
