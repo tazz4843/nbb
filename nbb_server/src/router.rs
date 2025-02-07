@@ -11,9 +11,9 @@ use tower_http::trace::TraceLayer;
 pub fn build_router() -> Router {
     Router::new()
         .route("/", get(index))
-        .route("/blog/:title", get(blog_post))
-        .route("/blog/:title/:file", get(blog_post_assets))
-        .route("/static/:file", get_service(ServeDir::new("./static")))
+        .route("/blog/{title}", get(blog_post))
+        .route("/blog/{title}/{file}", get(blog_post_assets))
+        .route("/static/{file}", get_service(ServeDir::new("./static")))
         .route("/info", get(info))
         .fallback(not_found)
         .layer(TraceLayer::new_for_http())
