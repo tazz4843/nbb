@@ -9,8 +9,8 @@ edition = "2021"
 nbb_config = { path = "../nbb_config" }
 
 tracing = "0.1"
-dashmap = "5.5"
-comrak = "0.21"
+dashmap = "6"
+comrak = "0.35"
 tokio = { version = "1.37", features = ["full"] }
 once_cell = { version = "1.19.0", features = ["parking_lot"] }
 blake2 = { version = "0.10" }

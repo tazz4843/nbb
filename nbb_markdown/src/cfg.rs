@@ -1,9 +1,9 @@
 use comrak::ComrakOptions;
 use once_cell::sync::OnceCell;
 
-static RENDERER_CONFIG: OnceCell<ComrakOptions> = OnceCell::new();
+static RENDERER_CONFIG: OnceCell<ComrakOptions<'static>> = OnceCell::new();
 
-fn load_config() -> ComrakOptions {
+fn load_config() -> ComrakOptions<'static> {
     let cfg = nbb_config::get_config();
     let md_cfg = &cfg.markdown;
     let md_ext_cfg = &md_cfg.extensions;
@@ -34,6 +34,6 @@ fn load_config() -> ComrakOptions {
     options
 }
 
-pub fn get_config<'a>() -> &'a ComrakOptions {
+pub fn get_config() -> &'static ComrakOptions<'static> {
     RENDERER_CONFIG.get_or_init(load_config)
 }
