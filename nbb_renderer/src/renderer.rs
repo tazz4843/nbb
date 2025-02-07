@@ -1,3 +1,4 @@
+use crate::{BLOG_POST_TEMPLATE_FILENAME, INDEX_TEMPLATE_FILENAME, NOT_FOUND_TEMPLATE_FILENAME};
 use once_cell::sync::OnceCell;
 use parking_lot::RwLock;
 use std::io::Read;
@@ -15,9 +16,18 @@ fn load_rendering_engine() -> Arc<RwLock<Tera>> {
             let mut renderer = Tera::default();
             renderer
                 .add_raw_templates(vec![
-                    ("index", include_str!("../../templates/index.html")),
-                    ("blog_post", include_str!("../../templates/blog_post.html")),
-                    ("404", include_str!("../../templates/404.html")),
+                    (
+                        INDEX_TEMPLATE_FILENAME,
+                        include_str!("../../templates/index.html"),
+                    ),
+                    (
+                        BLOG_POST_TEMPLATE_FILENAME,
+                        include_str!("../../templates/blog_post.html"),
+                    ),
+                    (
+                        NOT_FOUND_TEMPLATE_FILENAME,
+                        include_str!("../../templates/404.html"),
+                    ),
                 ])
                 .expect("internal error: compiled-in templates are invalid");
             renderer

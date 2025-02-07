@@ -1,5 +1,7 @@
 use tera::Context;
 
+pub static NOT_FOUND_TEMPLATE_FILENAME: &str = "404.html";
+
 /// Render the 404 not found page.
 ///
 /// # Panics
@@ -9,5 +11,5 @@ use tera::Context;
 pub fn render_404() -> String {
     let ctx = Context::default();
 
-    crate::renderer::render("404", ctx).expect("failed to render 404 page")
+    crate::renderer::render(NOT_FOUND_TEMPLATE_FILENAME, ctx).expect("failed to render 404 page")
 }

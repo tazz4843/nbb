@@ -1,6 +1,8 @@
 use crate::post::BlogPost;
 use tera::{Context, Error};
 
+pub const INDEX_TEMPLATE_FILENAME: &str = "index.html";
+
 /// Render the index page.
 ///
 /// `posts` should be a Vec of blog posts.
@@ -11,5 +13,5 @@ pub fn render_index_page(posts: &[BlogPost]) -> Result<String, Error> {
     let mut ctx = Context::default();
     ctx.insert("posts", &posts);
 
-    crate::renderer::render("index", ctx)
+    crate::renderer::render(INDEX_TEMPLATE_FILENAME, ctx)
 }
