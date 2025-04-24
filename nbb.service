@@ -1,0 +1,40 @@
+[Unit]
+Description=nbb - no bullshit blogging
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/nbb /etc/nbb/config.yaml
+ConfigurationDirectory=nbb
+
+DynamicUser=true
+RemoveIPC=yes
+CapabilityBoundingSet=
+NoNewPrivileges=yes
+AmbientCapabilities=
+PrivateDevices=yes
+ProtectClock=yes
+ProtectKernelLogs=yes
+ProtectControlGroups=yes
+ProtectKernelModules=yes
+PrivateMounts=yes
+SystemCallArchitectures=native
+MemoryDenyWriteExecute=yes
+RestrictNamespaces=yes
+RestrictSUIDSGID=yes
+ProtectHostname=yes
+LockPersonality=yes
+ProtectKernelTunables=yes
+RestrictAddressFamilies=AF_INET AF_INET6
+RestrictRealtime=yes
+ProtectSystem=strict
+ProtectProc=invisible
+ProcSubset=pid
+ProtectHome=yes
+PrivateUsers=yes
+PrivateTmp=yes
+SystemCallFilter=@system-service
+SystemCallFilter=~@resources @privileged
+UMask=0077
+
+[Install]
+WantedBy=default.target
