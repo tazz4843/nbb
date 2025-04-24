@@ -23,7 +23,7 @@ pub async fn index() -> Result<(HeaderMap, String), WebServerError> {
                 .or_else(|_| metadata.modified())?
                 .duration_since(UNIX_EPOCH)?
                 .as_secs();
-            let target = format!("/blog/{}", &filename).into();
+            let target = format!("{}/blog/{}", &cfg.general.path_prefix, &filename).into();
 
             res.push(BlogPost::post_index(
                 filename.into(),

@@ -92,6 +92,9 @@ pub struct GeneralConfig<'a> {
     /// Blog description
     pub description: Cow<'a, str>,
 
+    /// Path prefix for blog posts
+    pub path_prefix: Cow<'a, str>,
+
     /// Data directory location.
     ///
     /// Defaults to `./blog`
@@ -132,6 +135,7 @@ impl Default for GeneralConfig<'_> {
             title: Cow::default(),
             description: Cow::default(),
             data_dir: Path::new("./blog").into(),
+            path_prefix: Cow::default(),
             language: "en".into(),
             cache_rendered_pages: true,
             render_on_request: false,

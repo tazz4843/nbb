@@ -257,6 +257,10 @@ general:
   # Blog description
   description: "random stuff from an idiot dev"
   
+  # Path prefix if you want to serve from a subdomain on your root.
+  # Don't touch unless you know what you're doing.
+  #path_prefix: ""
+  
   # Data directory location.
   #
   # Defaults to ./blog
