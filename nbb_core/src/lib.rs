@@ -3,7 +3,7 @@ use tracing_subscriber::EnvFilter;
 
 fn load_config() {
     let cfg_location = std::env::args()
-        .nth(2)
+        .nth(1)
         .unwrap_or_else(|| "./config.yaml".to_string());
     nbb_config::load_config(cfg_location);
 }
