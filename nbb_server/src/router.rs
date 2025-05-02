@@ -3,6 +3,7 @@ use crate::blog_post_assets::blog_post_assets;
 use crate::index::index;
 use crate::info::info;
 use crate::not_found::not_found;
+use crate::static_assets::get_static_service;
 use axum::routing::{get, get_service};
 use axum::Router;
 use tower_http::services::ServeDir;
@@ -13,8 +14,8 @@ pub fn build_router() -> Router {
         .route("/", get(index))
         .route("/blog/{title}", get(blog_post))
         .route("/blog/{title}/{file}", get(blog_post_assets))
-        .route("/static/{file}", get_service(ServeDir::new("./static")))
         .route("/info", get(info))
+        .nest_service("/static", get_static_service())
         .fallback(not_found)
         .layer(TraceLayer::new_for_http())
 }

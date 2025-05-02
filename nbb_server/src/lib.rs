@@ -9,5 +9,6 @@ mod info;
 mod not_found;
 mod router;
 mod start_server;
+mod static_assets;
 
 pub use start_server::start_server;
