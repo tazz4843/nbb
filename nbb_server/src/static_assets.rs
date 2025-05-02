@@ -1,4 +1,3 @@
-use axum::extract::Path;
 use axum::handler::HandlerWithoutStateExt;
 use axum::routing::{get_service, MethodRouter};
 use tower_http::services::ServeDir;

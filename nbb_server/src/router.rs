@@ -4,9 +4,8 @@ use crate::index::index;
 use crate::info::info;
 use crate::not_found::not_found;
 use crate::static_assets::get_static_service;
-use axum::routing::{get, get_service};
+use axum::routing::get;
 use axum::Router;
-use tower_http::services::ServeDir;
 use tower_http::trace::TraceLayer;
 
 pub fn build_router() -> Router {

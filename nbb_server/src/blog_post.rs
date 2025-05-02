@@ -18,7 +18,7 @@ pub async fn blog_post(
         path, &target
     );
 
-    if !target.exists() {
+    if !target.try_exists()? {
         debug!(request_path=%path, resolved_path=?target, "path not found");
         return Err(WebServerError::NotFound);
     }
