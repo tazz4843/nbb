@@ -8,7 +8,6 @@ pub async fn blog_post(
     WebPath(mut path): WebPath<String>,
 ) -> Result<(HeaderMap, String), WebServerError> {
     let cfg = nbb_config::get_config();
-    path = path.to_lowercase();
     let mut target = cfg.general.data_dir.join(&path);
     target.set_extension("md");
     debug!(
